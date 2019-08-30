@@ -15,7 +15,7 @@ This repository contains the code necessary to repeat the experiments in the L-S
 
 ## Test Data
 
-The test data can be found in the companion repository (https://github.com/L-Sweeps/L-Sweeps-2D-examples)[https://github.com/L-Sweeps/L-Sweeps-2D-examples].
+The test data can be found in the companion repository [https://github.com/L-Sweeps/L-Sweeps-2D-examples](https://github.com/L-Sweeps/L-Sweeps-2D-examples).
 
 ## Building
 
