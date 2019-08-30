@@ -13,7 +13,6 @@
 #include "AssemblerHelmholtz2DFD.h"
 #include "LocalLinearSolver.h"
 #include "LocalLinearSolverEigenSparseLU.h"
-#include "LocalLinearSolverPardiso.h"
 #include "PML.h"
 #include "PMLCubic2D.h"
 
@@ -594,8 +593,6 @@ void Input::readCheckerboardDD( UInt DDID, DD *&dd ) const
   // set up the solvers if the solver type is known
   if( solverType=="Eigen" )
     solver = new LocalLinearSolverEigenSparseLU();
-  else if( solverType=="Pardiso" )
-    solver = new LocalLinearSolverPardiso();
   else
   {
     cerr << "ERROR: Unknown solver prescribed!" << endl;
@@ -807,7 +804,6 @@ Assembler *Input::readAssemblerHelmholtz2DFD(const Setting &CDD, const vector<Do
     cerr << "ERROR: No omega prescribed!" << endl;
     exit(1);
   }
-  cout << "omega=" << omega << endl;
   // read the PML width given by the minimum number of wavelengths
   Double minWavelengthsInPML;
   if(!CDD.lookupValue("MinWavelengthsInPML",minWavelengthsInPML))
@@ -839,14 +835,12 @@ Assembler *Input::readAssemblerHelmholtz2DFD(const Setting &CDD, const vector<Do
   // set the absorption constant
   Double C = log(omega);
   pml.setAbsorptionCoeff(C);
-  cout << C << endl;
   // determine the wavelength and compute the maximum wavelength for the given squared slowness and frequency
   Double wavelength1 = (domain[0][1]-domain[0][0])*2*pi/omega;
   Double wavelength2 = (domain[1][1]-domain[1][0])*2*pi/omega;
   Double wavelength = min(wavelength1,wavelength2);
   Double minimum = m->getMinReal();
   wavelength /= sqrt(minimum);
-  cout << wavelength << endl;
 
   // update the PML width
   Double pmlWidth = minWavelengthsInPML*wavelength;

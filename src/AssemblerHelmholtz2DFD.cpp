@@ -109,10 +109,6 @@ void AssemblerHelmholtz2DFD::setN( const UIntVector &N )
   mN[0] = (mCompDomain[0][1]-mCompDomain[0][0]+0.5*h1)/h1;
   mN[1] = (mCompDomain[1][1]-mCompDomain[1][0]+0.5*h2)/h2;
 
-  cout << "here" << endl;
-  cout << mCompDomain[0] << endl;
-  cout << mCompDomain[1] << endl;
-  cout << mN << endl;
   // clear the cache of the DOF points
   mPts = vector<DoubleVector>(0);
 }

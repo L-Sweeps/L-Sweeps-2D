@@ -17,12 +17,6 @@ FIND_PATH(MPI_INCLUDE_DIR mpi.h /usr/include /usr/local/include)
 FIND_LIBRARY(MPI_LIBRARY NAMES mpi PATH /usr/lib /usr/local/lib) 
 include_directories(${MPI_INCLUDE_DIR})
 
-FIND_LIBRARY(PARDISO_LIBRARY NAMES pardiso PATH /usr/lib /usr/local/lib) 
-
-FIND_PATH(BLAS_INCLUDE_DIR blas.h /usr/include /usr/local/include)
-FIND_LIBRARY(BLAS_LIBRARY NAMES blas PATH /usr/lib /usr/local/lib) 
-include_directories(${BLAS_INCLUDE_DIR})
-
 project(LSweeps)
 
 include(FindOpenMP)
@@ -46,7 +40,6 @@ set( SOURCEFILES
   ${SOURCE_DIR}/AssemblerHelmholtz.cpp 
   ${SOURCE_DIR}/AssemblerHelmholtz2DFD.cpp
   ${SOURCE_DIR}/LocalLinearSolverEigenSparseLU.cpp
-  ${SOURCE_DIR}/LocalLinearSolverPardiso.cpp
   ${SOURCE_DIR}/GlobalIterativeSolver.cpp
   ${SOURCE_DIR}/GlobalIterativeSolverGMRES.cpp
   ${SOURCE_DIR}/PML.cpp
@@ -66,7 +59,7 @@ set( SOURCEFILES
   )
 
 add_library( lsweeps_lib ${SOURCEFILES})
-target_link_libraries(lsweeps_lib Eigen3::Eigen ${MPI_LIBRARY} ${CONFIG++_LIBRARY} ${PARDISO_LIBRARY} ${BLAS_LIBRARY})
+target_link_libraries(lsweeps_lib Eigen3::Eigen ${MPI_LIBRARY} ${CONFIG++_LIBRARY} )
 
 add_executable( lsweeps main.cpp )
 target_link_libraries(lsweeps lsweeps_lib )
